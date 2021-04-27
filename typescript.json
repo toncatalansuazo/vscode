@@ -1,0 +1,50 @@
+{
+	"ngrx action": {
+		"prefix": "ngrx:action",
+		"body": [
+		  "export const ${1:functionName}= createAction(",
+		  "  '${2:description}',",
+		  "  props<{ ${3:propName}: string }>()",
+		  ");"
+		],
+		"description": "ngrx action"
+	},
+	"ngrx effect": {
+		"prefix": "ngrx:effect",
+		"body": [
+		  "${0:functionName}$ = createEffect(() => {",
+		  "    return this.actions$.pipe(",
+		  "      ofType(${1:fromAction}.${6:actionType}),",
+		  "      switchMap(${2:data}) =>",
+		  "        this.${3:service}.${4:functionName}(${5:args}).pipe(",
+		  "          map((data: ${5:responseType}) => ${2:fromAction}.${6:actionType}Success({ data: data.data })),",
+		  "          catchError((error) =>",
+		  "            of(",
+		  "              ${2:fromAction}.${6:actionType}Failure({ error: error.message })",
+		  "            )",
+		  "          )",
+		  "          )",
+		  "      )",
+		  "    );",
+		  "  });"
+		],
+		"description": "ngrx action"
+	  },
+	  "http angular": {
+		"prefix": "ng:http",
+		"body": [
+		  "${1:functionName}(data: any): Observable<any> {",
+		  "    const headers = new HttpHeaders().set('Authorization', ${2:accessToken});",
+		  "    return this.http.${3|get,post,put,delete|}<any>(`${this.${4:url}}`, {headers});",
+		  "}"
+		],
+		"description": "http angular"
+	  },
+	  "console.log": {
+		"prefix": "log",
+		"body": [
+		  "console.log({${1:data}});"
+		],
+		"description": "console.log"
+	  }
+}
